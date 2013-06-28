@@ -3,17 +3,17 @@
 
 
 #include "engine_eht/event/event.h"
-#include "network/networkloop.h"
+#include "network/server_socket_loop.h"
 
 class EventSocketReadyToAccept : public IEvent
 {
 public:
-  EventSocketReadyToAccept(PNetworkLoop networkLoop, PServerSocket serverSocket) :
+  EventSocketReadyToAccept(PServerSocketLoop networkLoop, PServerSocket serverSocket) :
     m_networkLoop(networkLoop),
     m_serverSocket(serverSocket)
   {  }
 
-  const PNetworkLoop & GetNetworkLoop() const {
+  const PServerSocketLoop & GetNetworkLoop() const {
     return m_networkLoop;
   }
 
@@ -23,7 +23,7 @@ public:
 
   EVENT_POST_TO_HANDLER_DECL
 private:
-  PNetworkLoop m_networkLoop;
+  PServerSocketLoop m_networkLoop;
   PServerSocket m_serverSocket;
 };
 

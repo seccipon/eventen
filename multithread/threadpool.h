@@ -3,7 +3,7 @@
 #include <boost/thread.hpp>
 #include <boost/noncopyable.hpp>
 
-#include "sharedqueue.h"
+#include "shared_queue.h"
 #include "../general/runnable.h"
 class ThreadPool : public boost::noncopyable
 {
@@ -26,4 +26,9 @@ private:
   SharedQueue<PRunnable> m_runnablesQueue;
 };
 
+typedef std::shared_ptr<ThreadPool> PThreadPool;
+
+
+
+extern PThreadPool gThreadPool;
 #endif // THREADPOOL_H

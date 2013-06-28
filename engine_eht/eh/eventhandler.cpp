@@ -3,6 +3,7 @@
 #include "../event/network/eventstreamsocketaccepted.h"
 #include "engine_eht/event/network/event_socket_ready_to_accept.h"
 #include "../event/test/eventtest.h"
+#include "engine_eht/event/network/event_network_accept_failed.h"
 
 #include <iostream>
 using namespace std;
@@ -26,6 +27,11 @@ void EventHandler::HandleEvent(const EventStreamSocketAccepted & event) {
 }
 
 void EventHandler::HandleEvent(const EventSocketReadyToAccept &event)
+{
+  UnexpectedEvent(&event);
+}
+
+void EventHandler::HandleEvent(const EventNetworkAcceptFailed &event)
 {
   UnexpectedEvent(&event);
 }

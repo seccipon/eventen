@@ -3,7 +3,7 @@
 
 #include "../event/eventfwd.h"
 #include "../eh/eventhandlerfwd.h"
-
+#include "multithread/threadpool.h"
 class Task
 {
 public:
@@ -16,6 +16,7 @@ public:
 
 protected:
   void PostEvent(const PEvent & event);
+  void PostEventAsync(const PEvent & event, PThreadPool tp);
 
 private:
   PEventHandler m_eh;

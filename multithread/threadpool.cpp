@@ -21,10 +21,15 @@ void ThreadPool::ThreadRoutine()
   for (;;) {
     PRunnable runnable;
     while(!m_runnablesQueue.GetBlock(runnable));
+    cout << "Thread wakeup" << endl;
     if (!runnable) {
       break;
     }
-    runnable->Run();
+    try {
+      runnable->Run();
+    } catch(...) {
+      cout << "Something uncaught in thread" << endl;
+    }
 
   }
   cout << "Thread stopped" << endl;

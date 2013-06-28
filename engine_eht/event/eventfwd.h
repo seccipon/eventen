@@ -10,6 +10,6 @@ typedef std::shared_ptr<IEvent> PEvent;
 class EventTest;
 class EventStreamSocketAccepted;
 class EventSocketReadyToAccept;
-
+class EventNetworkAcceptFailed;
 
 #endif // EVENTFWD_H

@@ -11,22 +11,26 @@
 
 #include "multithread/threadpool.h"
 
-#include "network/serversocket.h"
-#include "network/networkloop.h"
+#include "network/server_socket.h"
+#include "network/server_socket_loop.h"
 #include "engine_eht/eh/network/ehnetworkloop.h"
+
 using namespace std;
+
+PThreadPool gThreadPool;
 
 int main()
 {
+  gThreadPool.reset(new ThreadPool);
+  gThreadPool->Init(10);
+
   TaskTest taskTest(PEventHandler(new EventHandlerTest));
   taskTest.DoThing();
 
-  ThreadPool tp;
-  tp.Init(10);
 
   PEventHandler ehNetworkLoop(new EHNetworkLoop);
 
-  PNetworkLoop networkLoop(new NetworkLoop(ehNetworkLoop, 1));
+  PServerSocketLoop networkLoop(new ServerSocketLoop(ehNetworkLoop, 1));
 
   PServerSocket pSock(new ServerSocket(ServerSocket::Init(33600)));
   pSock->SetNonblock(true);
@@ -34,12 +38,28 @@ int main()
 
   networkLoop->AddListenSocket(pSock);
 
-  tp.PostRunnable(networkLoop);
+  gThreadPool->PostRunnable(networkLoop);
 
-  sleep(15);
+  sleep(1);
   networkLoop->Interrupt();
-  tp.Stop();
-  tp.Join();
+  sleep(1);
+  networkLoop->Interrupt();
+  sleep(1);
+  networkLoop->Interrupt();
+  sleep(1);
+  networkLoop->Interrupt();
+  sleep(1);
+  networkLoop->Interrupt();
+  sleep(1);
+  networkLoop->Interrupt();
+  sleep(1);
+  networkLoop->Interrupt();
+
+  networkLoop->Break();
+
+
+  gThreadPool->Stop();
+  gThreadPool->Join();
 
 
   return 0;

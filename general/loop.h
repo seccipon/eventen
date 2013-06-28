@@ -7,16 +7,21 @@ class Loop : public IRunnable
 {
 
 protected:
-  virtual bool IsInterrupted() = 0;
+  virtual bool IsBreak();
 public:
   virtual void Run();
   virtual void OneLoop() = 0;
-  virtual void Interrupt() = 0;
+  virtual void Break();
   virtual void Init() = 0;
   virtual void Destroy() = 0;
 
   virtual ~Loop()
   {}
+
+private:
+  bool m_flBreak;
+  virtual void DoBreak() = 0;
+
 };
 
 #endif // LOOP_H
