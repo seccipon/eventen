@@ -13,7 +13,8 @@
 
 #include "network/server_socket.h"
 #include "network/server_socket_loop.h"
-#include "engine_eht/eh/network/ehnetworkloop.h"
+#include "network/ehsocketloop.h"
+#include "log/log.h"
 
 using namespace std;
 
@@ -21,6 +22,8 @@ PThreadPool gThreadPool;
 
 int main()
 {
+
+  EVENTEN_LOG("%1% %2%", 100500 % 666);
   gThreadPool.reset(new ThreadPool);
   gThreadPool->Init(10);
 
@@ -29,8 +32,10 @@ int main()
 
 
   PEventHandler ehNetworkLoop(new EHNetworkLoop);
-
-  PServerSocketLoop networkLoop(new ServerSocketLoop(ehNetworkLoop, 1));
+//  TRACK(ehNetworkLoop);
+  int a = 100;
+  TRACK(a);
+  PServerSocketLoop networkLoop(new LoopSocketListen(ehNetworkLoop, 1));
 
   PServerSocket pSock(new ServerSocket(ServerSocket::Init(33600)));
   pSock->SetNonblock(true);
@@ -60,7 +65,6 @@ int main()
 
   gThreadPool->Stop();
   gThreadPool->Join();
-
 
   return 0;
 }

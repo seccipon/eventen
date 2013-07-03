@@ -6,10 +6,11 @@
 #include "network/pipeinterruptor.h"
 
 
-class LoopSocketWrite :
+class LoopSocketWrite
 {
 public:
   LoopSocketWrite();
+
 };
 
 #endif // LOOP_SOCKET_WRITE_H

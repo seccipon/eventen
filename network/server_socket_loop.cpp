@@ -3,11 +3,9 @@
 #include <unistd.h>
 #include <assert.h>
 #include <fcntl.h>
-#include "engine_eht/event/network/eventstreamsocketaccepted.h"
-#include "engine_eht/event/network/event_socket_ready_to_accept.h"
-#include "engine_eht/event/network/event_network_accept_failed.h"
+#include "network/events.h"
 using namespace std;
-void ServerSocketLoop::OneLoop()
+void LoopSocketListen::OneLoop()
 {
   fd_set fdsetRead;
   FD_ZERO(&fdsetRead);
@@ -38,7 +36,7 @@ void ServerSocketLoop::OneLoop()
 
     if (FD_ISSET(x->GetSocket(), &fdsetRead)) {
       r--;
-      int sockfd;
+      int sockfd = -1;
       bool r = x->Accept(sockfd);
       PEvent event;
       if (r) {
@@ -52,19 +50,19 @@ void ServerSocketLoop::OneLoop()
   }
 }
 
-void ServerSocketLoop::Interrupt()
+void LoopSocketListen::Interrupt()
 {
   m_interruptor.TouchByWrite1Byte();
 }
 
 
-void ServerSocketLoop::AddListenSocket(PServerSocket serverSocket)
+void LoopSocketListen::AddListenSocket(PServerSocket serverSocket)
 {
   boost::lock_guard<boost::mutex> lock(m_serverSocketsToAddMutex);
   m_serverSocketsToAdd.push_back(serverSocket);
 }
 
-void ServerSocketLoop::GrabNewListenSockets()
+void LoopSocketListen::GrabNewListenSockets()
 {
   boost::lock_guard<boost::mutex> lock(m_serverSocketsToAddMutex);
 
@@ -75,17 +73,17 @@ void ServerSocketLoop::GrabNewListenSockets()
   m_serverSocketsToAdd.clear();
 }
 
-void ServerSocketLoop::Init()
+void LoopSocketListen::Init()
 {
 
 }
 
-void ServerSocketLoop::Destroy()
+void LoopSocketListen::Destroy()
 {
 
 }
 
-void ServerSocketLoop::DoBreak()
+void LoopSocketListen::DoBreak()
 {
   Interrupt();
 }

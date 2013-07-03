@@ -17,7 +17,6 @@ ServerSocket ServerSocket::Init(uint16_t port)
   r = ::setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &v, sizeof(v));
   r = ::setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, &v, sizeof(v));
 
-
   sockaddr_in sa;
   ::memset(&sa, 0, sizeof(sa));
   sa.sin_addr.s_addr = INADDR_ANY;
@@ -27,8 +26,6 @@ ServerSocket ServerSocket::Init(uint16_t port)
   r = ::bind(sockfd, reinterpret_cast<sockaddr*>(&sa), sizeof(sa));
 
   assert(r != -1);
-
-
 
   return ServerSocket(sockfd);
 }

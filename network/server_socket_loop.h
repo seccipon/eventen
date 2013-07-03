@@ -10,16 +10,16 @@
 #include <deque>
 #include <vector>
 
-class ServerSocketLoop : public Loop, public Task, public boost::noncopyable, public std::enable_shared_from_this<ServerSocketLoop>
+class LoopSocketListen : public Loop, public Task, public boost::noncopyable, public std::enable_shared_from_this<LoopSocketListen>
 {
 public:
-  explicit ServerSocketLoop(PEventHandler eh, int timeout) :
+  explicit LoopSocketListen(PEventHandler eh, int timeout) :
     Task(eh),
     m_timeout(timeout)
   {
   }
 
-  virtual ~ServerSocketLoop()
+  virtual ~LoopSocketListen()
   {}
 
   void AddListenSocket(PServerSocket serverSocket);
@@ -43,5 +43,5 @@ private:
 };
 
 
-typedef std::shared_ptr<ServerSocketLoop> PServerSocketLoop;
+typedef std::shared_ptr<LoopSocketListen> PServerSocketLoop;
 #endif // NETWORKLOOP_H

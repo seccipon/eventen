@@ -1,10 +1,7 @@
 
-#include "ehnetworkloop.h"
+#include "ehsocketloop.h"
 #include <iostream>
-
-#include "engine_eht/event/network/eventstreamsocketaccepted.h"
-#include "engine_eht/event/network/event_socket_ready_to_accept.h"
-
+#include "events.h"
 
 using namespace std;
 void EHNetworkLoop::HandleEvent(const EventStreamSocketAccepted &event)

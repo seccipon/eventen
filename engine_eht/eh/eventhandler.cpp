@@ -1,9 +1,8 @@
 #include "eventhandler.h"
-#include "../event/event.h"
-#include "../event/network/eventstreamsocketaccepted.h"
-#include "engine_eht/event/network/event_socket_ready_to_accept.h"
-#include "../event/test/eventtest.h"
-#include "engine_eht/event/network/event_network_accept_failed.h"
+#include "engine_eht/event/event.h"
+#include "network/events.h"
+#include "engine_eht/event/test/eventtest.h"
+
 
 #include <iostream>
 using namespace std;
