@@ -1,6 +1,5 @@
 #include "loop.h"
 
-
 bool Loop::IsBreak()
 {
   return m_flBreak;

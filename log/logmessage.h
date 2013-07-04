@@ -4,6 +4,8 @@
 #include <string>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <memory>
+#include <stdint-gcc.h>
+#include <atomic>
 namespace Log
 {
   class LogMessage
@@ -14,6 +16,10 @@ namespace Log
 
     int Level() const {
       return m_level;
+    }
+
+    int Id() const {
+      return m_messageId;
     }
 
     const std::string & File() const {
@@ -44,6 +50,8 @@ namespace Log
     int m_line;
     std::string m_message;
     std::string m_tag;
+    int m_messageId;
+    static std::atomic_int lastLogMessageId;
   };
 
   typedef std::shared_ptr<LogMessage> PLogMessage;

@@ -18,7 +18,7 @@ public:
 
   void Listen(int backlog);
 
-  bool Accept(int & sockfd);
+  bool Accept(int & sockfd, int & errn);
 };
 
 typedef std::shared_ptr<ServerSocket> PServerSocket;

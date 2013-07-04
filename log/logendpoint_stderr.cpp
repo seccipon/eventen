@@ -3,5 +3,5 @@
 
 void Log::LogEndpoint_stderr::DoWriteLogMessage(const Log::LogMessage &message)
 {
-  std::cerr << m_formatter->DoFormatMessage(message) << std::endl;
+  std::cerr << GetFormattedMessage(message) << std::endl;
 }

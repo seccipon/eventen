@@ -35,14 +35,17 @@ void ServerSocket::Listen(int backlog)
   ::listen(GetSocket(), backlog);
 }
 
-bool ServerSocket::Accept(int &sockfd)
+bool ServerSocket::Accept(int &sockfd, int &errn)
 {
   int r = ::accept(GetSocket(), NULL, NULL);
+  errn = errno;
+
   if (r > 0) {
     sockfd = r;
+    errn = 0;
     return true;
   }
-  perror("accept()");
+
 
   return false;
 }

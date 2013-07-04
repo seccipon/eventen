@@ -5,26 +5,47 @@
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <iostream>
 
-#define EVENTEN_LOG(formatstr,val) \
-  std::cerr <<  "[ " <<  boost::posix_time::microsec_clock::local_time() << " ]" << (boost::format(std::string(" %s: %u >> "))  % __FILE__ % __LINE__) << (boost::format(formatstr) % val) << std::endl;
-#define LOG EVENTEN_LOG
-#define TRACK(val) \
-  EVENTEN_LOG("%1% == %2%", std::string(#val) % val)
 
 
+#define LOG_LEVEL_DEFAULT 2
+#define LOG_LEVEL_TRACK 5
 
-#define LOG_BASE(logger,level,formatstr,val) \
-{\
-  Log::LogMessage lm((level), __FILE__, __LINE__, (boost::format(std::string(formatstr)) % val).str(), boost::posix_time::microsec_clock::local_time()); \
+#define LOG_CURRENT_LOGGER_VAR_NAME ____CURRENTLOGGER12345678______
+
+#define LOG_LOGGER_TAG ""
+
+#define LOG_BASE(logger,level,formatstr,...) \
+{                                            \
+  Log::LogMessage lm((level), __FILE__, __LINE__, (boost::format(std::string(formatstr))  __VA_ARGS__).str(), boost::posix_time::microsec_clock::local_time() , LOG_LOGGER_TAG);  \
   logger->PushMessage(lm); \
 }
 
-#define LOG0_GLOB(formatstr,val) LOG_BASE(Log::gDefaultLogger, 0, formatstr, val)
+#define LOG_DEF(level,formatstr,...) LOG_BASE(LOG_CURRENT_LOGGER_VAR_NAME, level, formatstr,  __VA_ARGS__)
+
+#define LOG(formatstr,...) LOG_DEF(LOG_LEVEL_DEFAULT,formatstr,  __VA_ARGS__)
+#define TRACK(val) \
+  LOG_DEF(LOG_LEVEL_TRACK, "%1% == %2%", % std::string(#val) % val)
+
+#define LOG_SET_LOGGER(logger) const Log::PLogger & LOG_CURRENT_LOGGER_VAR_NAME(logger)
+
+
+
+
+
+
+
+#define LOG_SET_LOGGER_DEFAULT LOG_SET_LOGGER(Log::GetDefaultLogger())
+#define LOG_SET_LOGGER_FILELOCAL LOG_SET_LOGGER(LOG_FILELOCAL_LOGGER)
 
 #include "loggersimple.h"
 namespace Log
 {
-  extern PLogger gDefaultLogger;
   void InitDefaultLogger();
+  PLogger GetDefaultLogger();
+
+  void InitNetworkLogger();
+  PLogger GetNetworkLogger();
+
+  PLogger CreateSimpleFileLogger(const std::string & fileName);
 }
 #endif // LOG_H

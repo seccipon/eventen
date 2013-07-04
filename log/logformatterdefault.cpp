@@ -6,8 +6,7 @@
 std::string Log::LogFormatterDefault::DoFormatMessage(const Log::LogMessage &message)
 {
   std::stringstream ss;
-  ss << "[ " <<  message.Time() << " ]"
-     << (boost::format(std::string(" [%i] [ %s ] {%s: %u} >> %s"))
-         % message.Level() % message.Tag() % message.File() % message.Line()) % message.Message();
+  ss << (boost::format(std::string(" [ %1% ] %2% [%3%] { %4%: %5% } >> %6% >> %7%"))
+         % message.Id() % message.Time() % message.Level() % message.File() % message.Line()) % message.Tag() % message.Message();
   return ss.str();
 }

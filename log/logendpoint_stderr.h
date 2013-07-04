@@ -1,15 +1,15 @@
 #ifndef LOGENDPOINT_STDERR_H
 #define LOGENDPOINT_STDERR_H
 
-#include "logendpoint.h"
+#include "logendpointformatted.h"
 #include "logformatter.h"
 namespace Log
 {
-  class LogEndpoint_stderr : public ILogEndpoint
+  class LogEndpoint_stderr : public LogEndpointFormatted
   {
   public:
     LogEndpoint_stderr(PLogFormatter formatter) :
-      m_formatter(formatter)
+      LogEndpointFormatted(formatter)
     {  }
 
     void DoWriteLogMessage(const LogMessage &message);

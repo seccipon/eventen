@@ -16,7 +16,9 @@
 #include "network/ehsocketloop.h"
 #include "log/log.h"
 #include "log/loggersimple.h"
+#include "log/logendpoint_ostream.h"
 
+#include "log/logfilternull.h"
 using namespace std;
 
 PThreadPool gThreadPool;
@@ -25,18 +27,29 @@ PThreadPool gThreadPool;
 int main()
 {
   Log::InitDefaultLogger();
-  EVENTEN_LOG("%1% %2%", 100500 % 666);
+  Log::InitNetworkLogger();
+
+//  LOG_SET_LOGGER(Log::CreateSimpleFileLogger("zhopa!!!"));
+  LOG_SET_LOGGER_DEFAULT;
+
+  int a = 100;
+  TRACK(a);
+
+  LOG("sotona: %1% %2% %3%", % "sobaka" % 123 % boost::posix_time::microsec_clock::local_time());
+
   gThreadPool.reset(new ThreadPool);
   gThreadPool->Init(10);
 
   TaskTest taskTest(PEventHandler(new EventHandlerTest));
   taskTest.DoThing();
-  LOG0_GLOB("zhopa : %1% %2%", 100 % 5000);
+
+
+
+
 
   PEventHandler ehNetworkLoop(new EHNetworkLoop);
-//  TRACK(ehNetworkLoop);
-  int a = 100;
-  TRACK(a);
+
+
   PServerSocketLoop networkLoop(new LoopSocketListen(ehNetworkLoop, 1));
 
   PServerSocket pSock(new ServerSocket(ServerSocket::Init(33600)));

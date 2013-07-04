@@ -10,6 +10,8 @@ namespace Log
   {
   public:
     virtual void DoWriteLogMessage(const LogMessage & message) = 0;
+
+    virtual ~ILogEndpoint() {}
   };
 
   typedef std::shared_ptr<ILogEndpoint> PLogEndpoint;

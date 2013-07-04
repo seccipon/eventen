@@ -18,6 +18,10 @@ public:
   virtual ~Loop()
   {}
 
+  Loop() :
+    m_flBreak(false)
+  {  }
+
 private:
   bool m_flBreak;
   virtual void DoBreak() = 0;
