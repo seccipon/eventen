@@ -85,7 +85,6 @@ private:
   int m_sockfd;
   PServerSocket m_serverSocket;
   PServerSocketLoop m_networkLoop;
-
 };
 
 

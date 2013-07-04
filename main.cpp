@@ -19,6 +19,7 @@
 #include "log/logendpoint_ostream.h"
 
 #include "log/logfilternull.h"
+#include "util/assertion.h"
 using namespace std;
 
 PThreadPool gThreadPool;
@@ -26,10 +27,11 @@ PThreadPool gThreadPool;
 
 int main()
 {
-  Log::InitDefaultLogger();
-  Log::InitNetworkLogger();
+  Log::InitLoggers();
 
-//  LOG_SET_LOGGER(Log::CreateSimpleFileLogger("zhopa!!!"));
+  gThreadPool.reset(new ThreadPool);
+  gThreadPool->Init(10);
+
   LOG_SET_LOGGER_DEFAULT;
 
   int a = 100;
@@ -37,15 +39,9 @@ int main()
 
   LOG("sotona: %1% %2% %3%", % "sobaka" % 123 % boost::posix_time::microsec_clock::local_time());
 
-  gThreadPool.reset(new ThreadPool);
-  gThreadPool->Init(10);
 
   TaskTest taskTest(PEventHandler(new EventHandlerTest));
   taskTest.DoThing();
-
-
-
-
 
   PEventHandler ehNetworkLoop(new EHNetworkLoop);
 
@@ -80,7 +76,7 @@ int main()
 
   gThreadPool->Stop();
   gThreadPool->Join();
-
+  Log::DestroyLoggers();
   return 0;
 }
 

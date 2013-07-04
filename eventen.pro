@@ -34,7 +34,8 @@ network/ehsocketloop.cpp \
     log/loggersimple.cpp \
     log/log.cpp \
     log/logendpoint_ostream.cpp \
-    log/logendpointformatted.cpp
+    log/logendpointformatted.cpp \
+    log/loggerthreaded.cpp
 
 HEADERS += \
 engine_eht/task/taskfwd.h \
@@ -73,7 +74,9 @@ network/server_socket.h \
     log/logendpoint_stderr.h \
     log/loggersimple.h \
     log/logendpoint_ostream.h \
-    log/logendpointformatted.h
+    log/logendpointformatted.h \
+    util/assertion.h \
+    log/loggerthreaded.h
 
 
 QMAKE_CXXFLAGS += -std=c++11

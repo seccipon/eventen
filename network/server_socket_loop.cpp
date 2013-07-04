@@ -6,13 +6,11 @@
 #include "network/events.h"
 
 #include "log/log.h"
-
-
-
+#include "util/assertion.h"
 
 #undef LOG_DEFINE_FILELOCAL_LOGGER
 #undef LOG_LOGGER_TAG
-#define LOG_FILELOCAL_LOGGER Log::GetDefaultLogger()
+#define LOG_FILELOCAL_LOGGER Log::GetNetworkLogger()
 #define LOG_LOGGER_TAG "Network accept loop"
 
 using namespace std;
@@ -37,7 +35,7 @@ void LoopSocketListen::OneLoop()
   tv.tv_usec = 0;
   int r = ::select(nfds, &fdsetRead, NULL, NULL, &tv);
 
-  LOG("select() == %1%", % r);
+  LOG("Loop{%1%} select() == %2%", % this % r);
 
   if (FD_ISSET(m_interruptor.GetPipeReadFd(), &fdsetRead)) {
     m_interruptor.FlushRead();
@@ -52,13 +50,13 @@ void LoopSocketListen::OneLoop()
       r--;
       int sockfd = -1;
       int errn = 0;
-      bool r = x->Accept(sockfd, errn);
+      bool res = x->Accept(sockfd, errn);
       PEvent event;
-      if (r) {
-        LOG("Socket accepted successfully, socket id = %1%", % sockfd);
+      if (res) {
+        LOG("Loop{%1%} Socket accepted successfully, socket id = %2%",  % this % sockfd);
         event.reset(new EventStreamSocketAccepted(shared_from_this(), sockfd, x));
       } else {
-        LOG("Socket accept failed, errno : %1%", % errn);
+        LOG("Loop{%1%} Socket accept failed, errno : %2%",  % this % errn);
         event.reset(new EventNetworkAcceptFailed(shared_from_this(), x, errn));
       }
 
@@ -70,7 +68,7 @@ void LoopSocketListen::OneLoop()
 void LoopSocketListen::Interrupt()
 {
   LOG_SET_LOGGER_FILELOCAL;
-  LOG("Loop interrupted");
+  LOG("Loop{%1%} Interrupted", % this );
   m_interruptor.TouchByWrite1Byte();
 }
 
@@ -81,7 +79,7 @@ void LoopSocketListen::AddListenSocket(PServerSocket serverSocket)
 
   boost::lock_guard<boost::mutex> lock(m_serverSocketsToAddMutex);
   m_serverSocketsToAdd.push_back(serverSocket);
-  LOG("Added new listen socket: %1%", % serverSocket->GetSocket());
+  LOG("Loop{%1%}  Added new listen socket: %2%, port: %3%", % this % serverSocket->GetSocket() % serverSocket->GetPort());
 }
 
 void LoopSocketListen::GrabNewListenSockets()
@@ -91,29 +89,27 @@ void LoopSocketListen::GrabNewListenSockets()
 
   for (auto & x : m_serverSocketsToAdd) {
     m_serverSockets.push_back(x);
-    LOG("Socket %1% grabbed to loop", % x->GetSocket());
+    LOG("Loop{%1%}  Socket %2% (port %3%) grabbed to loop", % this % x->GetSocket() % x->GetPort());
   }
   m_serverSocketsToAdd.clear();
-
-
 }
 
 void LoopSocketListen::Init()
 {
   LOG_SET_LOGGER_FILELOCAL;
-  LOG("Initialized");
+  LOG("Loop{%1%}  Initialized", % this);
 }
 
 void LoopSocketListen::Destroy()
 {
   LOG_SET_LOGGER_FILELOCAL;
-  LOG("Uninitialized");
+  LOG("Loop{%1%} Uninitialized", % this);
 
 }
 
 void LoopSocketListen::DoBreak()
 {
   LOG_SET_LOGGER_FILELOCAL;
-  LOG("Break");
+  LOG("Loop{%1%} Break", % this);
   Interrupt();
 }

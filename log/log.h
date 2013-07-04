@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-
+#define LOG_LEVEL_LOGICERROR 0
 #define LOG_LEVEL_DEFAULT 2
 #define LOG_LEVEL_TRACK 5
 
@@ -28,23 +28,29 @@
 
 #define LOG_SET_LOGGER(logger) const Log::PLogger & LOG_CURRENT_LOGGER_VAR_NAME(logger)
 
-
-
-
-
-
-
 #define LOG_SET_LOGGER_DEFAULT LOG_SET_LOGGER(Log::GetDefaultLogger())
 #define LOG_SET_LOGGER_FILELOCAL LOG_SET_LOGGER(LOG_FILELOCAL_LOGGER)
 
 #include "loggersimple.h"
 namespace Log
 {
+  void InitLoggers();
+  void DestroyLoggers();
+
   void InitDefaultLogger();
   PLogger GetDefaultLogger();
 
   void InitNetworkLogger();
   PLogger GetNetworkLogger();
+
+  void InitLogicErrorLogger();
+  PLogger GetLogicErrorLogger();
+
+  void InitThreadLogger();
+  PLogger GetThreadLogger();
+
+  void InitEventLogger();
+  PLogger GetEventLogger();
 
   PLogger CreateSimpleFileLogger(const std::string & fileName);
 }

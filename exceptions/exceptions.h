@@ -25,6 +25,7 @@ public:
 
 class ExceptionAssertFailed : public std::logic_error
 {
+public:
   ExceptionAssertFailed(const std::string & file, int line, const std::string & assertionStr);
 };
 

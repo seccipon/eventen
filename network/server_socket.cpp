@@ -27,13 +27,14 @@ ServerSocket ServerSocket::Init(uint16_t port)
 
   assert(r != -1);
 
-  return ServerSocket(sockfd);
+  return ServerSocket(sockfd, port);
 }
 
 void ServerSocket::Listen(int backlog)
 {
   ::listen(GetSocket(), backlog);
 }
+
 
 bool ServerSocket::Accept(int &sockfd, int &errn)
 {

@@ -18,7 +18,7 @@ public:
 private:
 
   //Unexpected event handler. Can be overloaded.
-  virtual void UnexpectedEvent(const IEvent * event);
+  virtual void UnexpectedEvent(const IEvent &event);
 };
 
 

@@ -16,7 +16,7 @@ ExceptionLibcall::ExceptionLibcall(const std::string &file, int line, const std:
 }
 
 ExceptionAssertFailed::ExceptionAssertFailed(const std::string &file, int line, const std::string &assertionStr) :
-  std::logic_error(ExceptionContext::MakeExceptionContextStr(file, line, "assertion failed", assertionStr))
+  std::logic_error(ExceptionContext::MakeExceptionContextStr(file, line, "assertion failed", std::string("(") + assertionStr + std::string(")")))
 {
 
 }

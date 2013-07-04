@@ -14,7 +14,6 @@ public:
   virtual void Break();
   virtual void Init() = 0;
   virtual void Destroy() = 0;
-
   virtual ~Loop()
   {}
 
@@ -24,6 +23,7 @@ public:
 
 private:
   bool m_flBreak;
+
   virtual void DoBreak() = 0;
 
 };

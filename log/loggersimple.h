@@ -2,8 +2,8 @@
 #define LOGGERSIMPLE_H
 
 #include "logger.h"
-#include "logformatterdefault.h"
-#include "logendpoint_stderr.h"
+#include "logformatter.h"
+#include "logendpoint.h"
 #include "logfilter.h"
 
 namespace Log

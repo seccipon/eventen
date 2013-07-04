@@ -25,5 +25,5 @@ void PipeInterruptor::TouchByWrite1Byte()
 void PipeInterruptor::FlushRead()
 {
   char buf[1024];
-  while(read(m_pipe[0], buf, 1024)> 0);
+  while(read(m_pipe[0], buf, 1024) > 0);
 }
