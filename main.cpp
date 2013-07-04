@@ -15,21 +15,23 @@
 #include "network/server_socket_loop.h"
 #include "network/ehsocketloop.h"
 #include "log/log.h"
+#include "log/loggersimple.h"
 
 using namespace std;
 
 PThreadPool gThreadPool;
 
+
 int main()
 {
-
+  Log::InitDefaultLogger();
   EVENTEN_LOG("%1% %2%", 100500 % 666);
   gThreadPool.reset(new ThreadPool);
   gThreadPool->Init(10);
 
   TaskTest taskTest(PEventHandler(new EventHandlerTest));
   taskTest.DoThing();
-
+  LOG0_GLOB("zhopa : %1% %2%", 100 % 5000);
 
   PEventHandler ehNetworkLoop(new EHNetworkLoop);
 //  TRACK(ehNetworkLoop);

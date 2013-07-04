@@ -1,0 +1,2 @@
+#include "logformatter.h"
+

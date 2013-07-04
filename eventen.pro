@@ -20,7 +20,19 @@ network/pipeinterruptor.cpp \
 network/loop_socket_write.cpp \
 network/events.cpp \
 network/ehsocketloop.cpp \
-    exceptions/exceptions.cpp
+    exceptions/exceptions.cpp \
+    log/logmessage.cpp \
+    log/logfilter.cpp \
+    log/logendpoint.cpp \
+    log/logformatter.cpp \
+    log/logger.cpp \
+    log/logfilterbylevel.cpp \
+    log/logfilternull.cpp \
+    log/loggersimple_stderr.cpp \
+    log/logformatterdefault.cpp \
+    log/logendpoint_stderr.cpp \
+    log/loggersimple.cpp \
+    log/log.cpp
 
 HEADERS += \
 engine_eht/task/taskfwd.h \
@@ -46,7 +58,18 @@ network/socket.h \
 network/server_socket_loop.h \
 network/server_socket.h \
     log/log.h \
-    exceptions/exceptions.h
+    exceptions/exceptions.h \
+    log/logmessage.h \
+    log/logfilter.h \
+    log/logendpoint.h \
+    log/logformatter.h \
+    log/logger.h \
+    log/logfilterbylevel.h \
+    log/logfilternull.h \
+    log/loggersimple_stderr.h \
+    log/logformatterdefault.h \
+    log/logendpoint_stderr.h \
+    log/loggersimple.h
 
 
 QMAKE_CXXFLAGS += -std=c++11
