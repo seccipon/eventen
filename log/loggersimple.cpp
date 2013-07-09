@@ -3,16 +3,13 @@
 
 namespace Log
 {
-  LoggerSimple::LoggerSimple(PLogFilter filter, PLogEndpoint endpoint) :
-    m_filter(filter),
+  LoggerSimple::LoggerSimple(PLogger endpoint) :
     m_endpoint(endpoint)
   {
   }
 
-  void LoggerSimple::PushMessage(const LogMessage &message)
+  void LoggerSimple::PushMessage(const PLogMessage &message)
   {
-    if (m_filter->DoForwardMessage(message)) {
-      m_endpoint->DoWriteLogMessage(message);
-    }
+      m_endpoint->PushMessage(message);
   }
 }

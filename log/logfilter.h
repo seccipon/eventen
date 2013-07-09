@@ -3,14 +3,22 @@
 
 
 #include "logmessage.h"
+#include "logger.h"
 #include <memory.h>
 namespace Log
 {
-  class ILogFilter
+  class LogFilter : public ILogger
   {
-  public:
-    virtual bool DoForwardMessage(const LogMessage & logMessage) = 0;
+  public :
+    LogFilter(const PLogger & endpoint) :
+      m_endpoint(endpoint)
+    {  }
+
+    virtual void PushMessage(const PLogMessage &message);
+  protected:
+    virtual bool ShouldForwardMessage(const PLogMessage & logMessage) = 0;
+  private:
+    PLogger m_endpoint;
   };
-  typedef std::shared_ptr<ILogFilter> PLogFilter;
 }
 #endif // LOGFILTER_H

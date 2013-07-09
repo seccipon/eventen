@@ -11,11 +11,10 @@ namespace Log
   class LoggerSimple : public ILogger
   {
   public:
-    LoggerSimple(PLogFilter filter, PLogEndpoint endpoint);
-    virtual void PushMessage(const LogMessage &message);
+    LoggerSimple(PLogger endpoint);
+    virtual void PushMessage(const PLogMessage &message);
   private:
-    PLogFilter m_filter;
-    PLogEndpoint m_endpoint;
+    PLogger m_endpoint;
   };
 }
 #endif // LOGGERSIMPLE_H

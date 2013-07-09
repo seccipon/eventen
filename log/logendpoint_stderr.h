@@ -1,20 +1,19 @@
 #ifndef LOGENDPOINT_STDERR_H
 #define LOGENDPOINT_STDERR_H
 
-#include "logendpointformatted.h"
+#include "logendpoint_ostream.h"
 #include "logformatter.h"
 namespace Log
 {
-  class LogEndpoint_stderr : public LogEndpointFormatted
+  class Logger_stderr : public Logger_ostream
   {
   public:
-    LogEndpoint_stderr(PLogFormatter formatter) :
-      LogEndpointFormatted(formatter)
+    Logger_stderr(PLogFormatter formatter) :
+      Logger_ostream(std::cerr, formatter)
     {  }
 
-    void DoWriteLogMessage(const LogMessage &message);
+    virtual void PushMessage(const PLogMessage & message);
   private:
-    PLogFormatter m_formatter;
   };
 }
 #endif // LOGENDPOINT_STDERR_H

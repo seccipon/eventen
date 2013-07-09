@@ -14,8 +14,8 @@ namespace Log
   class LoggerThreaded : public ILogger, public Loop
   {
   public:
-    LoggerThreaded(PLogFilter filter, PLogEndpoint endpoint);
-    virtual void PushMessage(const LogMessage &message);
+    LoggerThreaded(PLogger endpoint);
+    virtual void PushMessage(const PLogMessage &message);
 
     virtual void OneLoop();
     virtual void Init();
@@ -24,8 +24,7 @@ namespace Log
   private:
     SharedQueue<PLogMessage> m_queue;
 
-    PLogFilter m_filter;
-    PLogEndpoint m_endpoint;
+    PLogger m_endpoint;
   };
   typedef std::shared_ptr<LoggerThreaded> PLoggerThreaded;
 

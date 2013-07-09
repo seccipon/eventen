@@ -7,7 +7,7 @@ namespace Log  {
 class LogFormatterDefault : public ILogFormatter
 {
 public:
-  std::string DoFormatMessage(const LogMessage &message);
+  std::string DoFormatMessage(const PLogMessage &message);
 };
 }
 #endif // LOGFORMATTERDEFAULT_H

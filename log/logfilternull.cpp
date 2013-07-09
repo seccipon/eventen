@@ -3,9 +3,16 @@
 
 namespace Log
 {
-  bool LogFilterNull::DoForwardMessage(const Log::LogMessage &logMessage)
+  bool LogFilterNull::ShouldForwardMessage(const PLogMessage &logMessage)
   {
     return true;
   }
+
+  LogFilterNull::LogFilterNull(const PLogger &endpoint) :
+    LogFilter(endpoint)
+  {
+
+  }
+
 }
 

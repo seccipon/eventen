@@ -4,9 +4,11 @@
 
 namespace Log
 {
-  class LogFilterNull : public ILogFilter
+  class LogFilterNull : public LogFilter
   {
-    virtual bool DoForwardMessage(const LogMessage &logMessage);
+  public:
+    LogFilterNull(const PLogger & endpoint);
+    virtual bool ShouldForwardMessage(const PLogMessage &logMessage);
   };
 }
 #endif // LOGFILTERNULL_H

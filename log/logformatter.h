@@ -9,7 +9,7 @@ namespace Log
   class ILogFormatter
   {
   public:
-    virtual std::string DoFormatMessage(const LogMessage & message) = 0;
+    virtual std::string DoFormatMessage(const PLogMessage & message) = 0;
   };
   typedef std::shared_ptr<ILogFormatter> PLogFormatter;
 }

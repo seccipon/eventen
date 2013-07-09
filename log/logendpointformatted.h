@@ -1,22 +1,22 @@
 #ifndef LOGENDPOINTFORMATTED_H
 #define LOGENDPOINTFORMATTED_H
 
-#include "logendpoint.h"
+#include "logger.h"
 #include "logformatter.h"
 namespace Log
 {
-  class LogEndpointFormatted : public ILogEndpoint
+  class LoggerFormatted : public ILogger
   {
   public:
-    LogEndpointFormatted(PLogFormatter formatter) :
+    LoggerFormatted(PLogFormatter formatter) :
       m_formatter(formatter)
     {  }
 
-    std::string GetFormattedMessage(const LogMessage & message) const {
+    std::string GetFormattedMessage(const PLogMessage & message) const {
       return m_formatter->DoFormatMessage(message);
     }
 
-    virtual ~LogEndpointFormatted()
+    virtual ~LoggerFormatted()
     { }
   private:
     PLogFormatter m_formatter;

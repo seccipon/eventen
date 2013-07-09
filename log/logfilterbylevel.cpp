@@ -3,13 +3,14 @@
 
 namespace Log
 {
-    LogFilterByLevel::LogFilterByLevel(int levelMax, int levelMin) :
+    LogFilterByLevel::LogFilterByLevel(const PLogger &endpoint, int levelMax, int levelMin) :
+      LogFilter(endpoint),
       m_levelMax(levelMax),
       m_levelMin(levelMin)
     {    }
 
-    bool LogFilterByLevel::DoForwardMessage(const LogMessage &logMessage)
+    bool LogFilterByLevel::ShouldForwardMessage(const PLogMessage &logMessage)
     {
-      return m_levelMin <= logMessage.Level() && logMessage.Level() <= m_levelMax;
+      return m_levelMin <= logMessage->Level() && logMessage->Level() <= m_levelMax;
     }
 }

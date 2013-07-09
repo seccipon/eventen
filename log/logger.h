@@ -9,7 +9,8 @@ namespace Log
   class ILogger
   {
   public:
-    virtual void PushMessage(const LogMessage & message) = 0;
+    virtual void PushMessage(const PLogMessage & message) = 0;
+    virtual ~ILogger(){ }
   };
   typedef std::shared_ptr<ILogger> PLogger;
 }

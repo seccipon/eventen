@@ -5,15 +5,22 @@
 #include "logformatter.h"
 
 namespace Log {
-  class LogEndpoint_ostream : public LogEndpointFormatted
+  class Logger_ostream : public LoggerFormatted
   {
   public:
-    LogEndpoint_ostream(std::shared_ptr<std::ostream> ostream, PLogFormatter formatter);
-    void DoWriteLogMessage(const LogMessage &message);
+    Logger_ostream(std::shared_ptr<std::ostream> ostream, PLogFormatter formatter);
+    Logger_ostream(std::ostream & ostream, PLogFormatter formatter);
 
-    virtual ~LogEndpoint_ostream();
+    virtual void PushMessage(const PLogMessage & message);
+
+    virtual ~Logger_ostream() {   }
+    std::ostream & GetOstream() {
+      return m_ostream;
+    }
+
   private:
-      std::shared_ptr<std::ostream> m_ostream;
+      std::shared_ptr<std::ostream> m_ostreamptr;
+      std::ostream & m_ostream;
   };
 }
 #endif // LOGENDPOINT_OSTREAM_H

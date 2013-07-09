@@ -23,19 +23,17 @@ network/ehsocketloop.cpp \
     exceptions/exceptions.cpp \
     log/logmessage.cpp \
     log/logfilter.cpp \
-    log/logendpoint.cpp \
-    log/logformatter.cpp \
-    log/logger.cpp \
     log/logfilterbylevel.cpp \
     log/logfilternull.cpp \
-    log/loggersimple_stderr.cpp \
     log/logformatterdefault.cpp \
     log/logendpoint_stderr.cpp \
     log/loggersimple.cpp \
     log/log.cpp \
     log/logendpoint_ostream.cpp \
     log/logendpointformatted.cpp \
-    log/loggerthreaded.cpp
+    log/loggerthreaded.cpp \
+    log/logger_cumulative.cpp \
+    log/logendpoint_logfile.cpp
 
 HEADERS += \
 engine_eht/task/taskfwd.h \
@@ -64,19 +62,19 @@ network/server_socket.h \
     exceptions/exceptions.h \
     log/logmessage.h \
     log/logfilter.h \
-    log/logendpoint.h \
     log/logformatter.h \
     log/logger.h \
     log/logfilterbylevel.h \
     log/logfilternull.h \
-    log/loggersimple_stderr.h \
     log/logformatterdefault.h \
     log/logendpoint_stderr.h \
     log/loggersimple.h \
     log/logendpoint_ostream.h \
     log/logendpointformatted.h \
     util/assertion.h \
-    log/loggerthreaded.h
+    log/loggerthreaded.h \
+    log/logger_cumulative.h \
+    log/logendpoint_logfile.h
 
 
 QMAKE_CXXFLAGS += -std=c++11

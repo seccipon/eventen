@@ -15,6 +15,10 @@ namespace Log
 
   }
 
+  void LogMessage::SetText(const std::string &text)
+  {
+    m_message = text;
+  }
 
   std::atomic_int LogMessage::lastLogMessageId;
 }

@@ -11,7 +11,7 @@
 #undef LOG_DEFINE_FILELOCAL_LOGGER
 #undef LOG_LOGGER_TAG
 #define LOG_FILELOCAL_LOGGER Log::GetNetworkLogger()
-#define LOG_LOGGER_TAG "Network accept loop"
+#define LOG_LOGGER_TAG "NETW"
 
 using namespace std;
 void LoopSocketListen::OneLoop()

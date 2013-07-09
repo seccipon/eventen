@@ -1,7 +1,7 @@
 #include "logendpoint_stderr.h"
 
 
-void Log::LogEndpoint_stderr::DoWriteLogMessage(const Log::LogMessage &message)
+void Log::Logger_stderr::PushMessage(const PLogMessage &message)
 {
   std::cerr << GetFormattedMessage(message) << std::endl;
 }

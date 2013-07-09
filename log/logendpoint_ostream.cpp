@@ -1,26 +1,24 @@
 
 #include "logendpoint_ostream.h"
-#include <boost/format.hpp>
-#include <boost/date_time.hpp>
+
 namespace Log
 {
-  void LogEndpoint_ostream::DoWriteLogMessage(const Log::LogMessage &message)
+  void Logger_ostream::PushMessage(const PLogMessage &message)
   {
-    *m_ostream << GetFormattedMessage(message) << std::endl;
+    GetOstream() << GetFormattedMessage(message) << std::endl;
   }
 
-  LogEndpoint_ostream::~LogEndpoint_ostream()
-  {
-    *m_ostream << boost::format("=== Logfile writing done at %1% ===")
-                  % boost::posix_time::microsec_clock::local_time()  << std::endl;
-  }
 
-  LogEndpoint_ostream::LogEndpoint_ostream(std::shared_ptr<std::ostream> ostream, PLogFormatter formatter) :
-    LogEndpointFormatted(formatter),
+  Logger_ostream::Logger_ostream(std::shared_ptr<std::ostream> ostream, PLogFormatter formatter) :
+    LoggerFormatted(formatter),
+    m_ostreamptr(ostream),
+    m_ostream(*m_ostreamptr)
+  {   }
+
+  Logger_ostream::Logger_ostream(std::ostream &ostream, PLogFormatter formatter) :
+    LoggerFormatted(formatter),
     m_ostream(ostream)
   {
-    *m_ostream << boost::format("=== Logfile created by pid %1% at %2% ===")
-                  % ::getpid() % boost::posix_time::microsec_clock::local_time()  << std::endl;
-  }
 
+  }
 }

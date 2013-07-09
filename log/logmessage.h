@@ -42,6 +42,8 @@ namespace Log
       return m_time;
     }
 
+    void SetText(const std::string & text);
+
   private:
 
     boost::posix_time::ptime m_time;

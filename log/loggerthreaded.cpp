@@ -1,16 +1,14 @@
 #include "loggerthreaded.h"
 
-Log::LoggerThreaded::LoggerThreaded(Log::PLogFilter filter, Log::PLogEndpoint endpoint) :
-  m_filter(filter),
+Log::LoggerThreaded::LoggerThreaded(Log::PLogger endpoint) :
   m_endpoint(endpoint)
 {
 
 }
 
-void Log::LoggerThreaded::PushMessage(const Log::LogMessage &message)
+void Log::LoggerThreaded::PushMessage(const PLogMessage &message)
 {
-  PLogMessage lm(new Log::LogMessage(message));
-  m_queue.Put(lm);
+  m_queue.Put(message);
 }
 
 void Log::LoggerThreaded::OneLoop()
@@ -19,9 +17,7 @@ void Log::LoggerThreaded::OneLoop()
   while(!m_queue.GetBlock(lm));
 
   if (lm) {
-    if (m_filter->DoForwardMessage(*lm)) {
-      m_endpoint->DoWriteLogMessage(*lm);
-    }
+      m_endpoint->PushMessage(lm);
   }
 }
 

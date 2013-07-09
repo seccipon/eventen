@@ -17,8 +17,10 @@
 #include "log/log.h"
 #include "log/loggersimple.h"
 #include "log/logendpoint_ostream.h"
-
+#include "log/loggerwrapper.h"
+#include "log/logger_cumulative.h"
 #include "log/logfilternull.h"
+#include "log/logfilter.h"
 #include "util/assertion.h"
 using namespace std;
 
@@ -29,10 +31,15 @@ int main()
 {
   Log::InitLoggers();
 
+  LOG_SET_LOGGER_DEFAULT;
+
+
+  Log::LoggerCumulative lcm(Log::GetDefaultLogger(), LOG_MSG("Main function loop"));
+  lcm.PushMessage(LOG_MSG("zhopa pizda %1% %2% %3% ", % 234 % "asdfasdf" % 231));
+  lcm.Success(LOG_MSG("alright"));
+
   gThreadPool.reset(new ThreadPool);
   gThreadPool->Init(10);
-
-  LOG_SET_LOGGER_DEFAULT;
 
   int a = 100;
   TRACK(a);

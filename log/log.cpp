@@ -20,7 +20,7 @@ namespace Log
 //  {
 //    std::shared_ptr<std::ostream> pOstream(new std::ofstream(fileName));
 //    Log::PLogFormatter logFormatter(new Log::LogFormatterDefault);
-//    Log::PLogEndpoint logEndpoint(new Log::LogEndpoint_ostream(pOstream, logFormatter));
+//    Log::PLogger logEndpoint(new Log::LogEndpoint_ostream(pOstream, logFormatter));
 //    Log::PLogFilter logFilter(new Log::LogFilterNull);
 //    Log::PLogger logger(new Log::LoggerThreaded(logFilter, logEndpoint));
 //    return logger;
@@ -34,10 +34,9 @@ namespace Log
   void InitDefaultLogger()
   {
     PLogFormatter formatter (new LogFormatterDefault);
-    PLogFilter filter (new LogFilterNull);
-    PLogEndpoint endpoint (new LogEndpoint_stderr(formatter));
+    PLogger endpoint (new Logger_stderr(formatter));
 
-    gDefaultLogger.reset(new LoggerThreaded(filter, endpoint));
+    gDefaultLogger.reset(new LoggerThreaded(endpoint));
   }
 
   PLogger GetDefaultLogger()
@@ -49,9 +48,8 @@ namespace Log
   {
     std::shared_ptr<std::ostream> pOstream(new std::ofstream("network.log"));
     PLogFormatter formatter (new LogFormatterDefault);
-    PLogFilter filter (new LogFilterNull);
-    PLogEndpoint endpoint (new LogEndpoint_ostream(pOstream, formatter));
-    PLoggerThreaded lg(new LoggerThreaded(filter, endpoint));
+    PLogger endpoint (new Logger_ostream(pOstream, formatter));
+    PLoggerThreaded lg(new LoggerThreaded(endpoint));
     gNetworkLogger = lg;
   }
 
@@ -64,9 +62,8 @@ namespace Log
   {
     std::shared_ptr<std::ostream> pOstream(new std::ofstream("logic_error.log"));
     PLogFormatter formatter (new LogFormatterDefault);
-    PLogFilter filter (new LogFilterNull);
-    PLogEndpoint endpoint (new LogEndpoint_ostream(pOstream, formatter));
-    PLoggerThreaded lg(new LoggerThreaded(filter, endpoint));
+    PLogger endpoint (new Logger_ostream(pOstream, formatter));
+    PLoggerThreaded lg(new LoggerThreaded(endpoint));
     gLogicErrorLogger = lg;
   }
 
@@ -79,9 +76,8 @@ namespace Log
   {
     std::shared_ptr<std::ostream> pOstream(new std::ofstream("event.log"));
     PLogFormatter formatter (new LogFormatterDefault);
-    PLogFilter filter (new LogFilterNull);
-    PLogEndpoint endpoint (new LogEndpoint_ostream(pOstream, formatter));
-    PLoggerThreaded lg(new LoggerThreaded(filter, endpoint));
+    PLogger endpoint (new Logger_ostream(pOstream, formatter));
+    PLoggerThreaded lg(new LoggerThreaded(endpoint));
     gEventLogger = lg;
   }
 
@@ -94,9 +90,8 @@ namespace Log
   {
     std::shared_ptr<std::ostream> pOstream(new std::ofstream("thread.log"));
     PLogFormatter formatter (new LogFormatterDefault);
-    PLogFilter filter (new LogFilterNull);
-    PLogEndpoint endpoint (new LogEndpoint_ostream(pOstream, formatter));
-    PLoggerThreaded lg(new LoggerThreaded(filter, endpoint));
+    PLogger endpoint (new Logger_ostream(pOstream, formatter));
+    PLoggerThreaded lg(new LoggerThreaded(endpoint));
     gThreadLogger = lg;
   }
 
