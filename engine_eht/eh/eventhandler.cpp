@@ -23,14 +23,12 @@ void EventHandler::HandleEvent(const PEvent & event) {
   event->PostToHandler(*this);
 }
 
-
 void EventHandler::UnexpectedEvent(const IEvent & event) {
   LOG_SET_LOGGER_FILELOCAL;
 
   LOG("Unexpected event ({%1%}, %2%) handled by event handler (%3%, %4%",
       % &event % typeid(event).name() % this % typeid(*this).name());
 }
-
 
 void EventHandler::HandleEvent(const EventTest & event) {
   UnexpectedEvent(event);
@@ -49,4 +47,20 @@ void EventHandler::HandleEvent(const EventNetworkAcceptFailed &event)
 {
   UnexpectedEvent(event);
 }
+
+void EventHandler::HandleEvent(const EventSocketWriteEOF &event)
+{
+  UnexpectedEvent(event);
+}
+
+void EventHandler::HandleEvent(const EventSocketWriteCompleted &event)
+{
+  UnexpectedEvent(event);
+}
+
+void EventHandler::HandleEvent(const EventSocketError &event)
+{
+  UnexpectedEvent(event);
+}
+
 

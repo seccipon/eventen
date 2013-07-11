@@ -4,8 +4,6 @@
 #include <stdexcept>
 #include <string>
 
-
-
 class ExceptionContext
 {
 public:
@@ -20,7 +18,6 @@ public:
 
 #define EXCEPTION_LIBCALL(str) \
   ExceptionLibcall(__FILE__, __LINE__, (str))
-
 
 
 class ExceptionAssertFailed : public std::logic_error

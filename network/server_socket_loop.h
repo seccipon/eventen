@@ -15,6 +15,7 @@ class LoopSocketListen : public Loop, public Task, public boost::noncopyable, pu
 public:
   explicit LoopSocketListen(PEventHandler eh, int timeout) :
     Task(eh),
+    m_maxNfds(0),
     m_timeout(timeout)
   {
   }
@@ -35,10 +36,14 @@ private:
 
   virtual void DoBreak();
 
+private:
+  int m_maxNfds;
   int m_timeout;
   PipeInterruptor m_interruptor;
-  std::vector<PServerSocket> m_serverSockets;
+
+
   boost::mutex m_serverSocketsToAddMutex;
+  std::vector<PServerSocket> m_serverSockets;
   std::deque<PServerSocket> m_serverSocketsToAdd;
 };
 

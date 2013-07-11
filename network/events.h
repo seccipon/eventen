@@ -2,8 +2,8 @@
 #define NETWORK_EVENTS_H
 
 #include "engine_eht/event/event.h"
-#include "network/server_socket_loop.h"
-
+#include "server_socket_loop.h"
+#include "stream_socket.h"
 class EventNetworkAcceptFailed : public IEvent
 {
 public:
@@ -39,6 +39,8 @@ private:
 class EventSocketReadyToAccept : public IEvent
 {
 public:
+  EVENT_POST_TO_HANDLER_DECL
+
   EventSocketReadyToAccept(PServerSocketLoop networkLoop, PServerSocket serverSocket) :
     m_networkLoop(networkLoop),
     m_serverSocket(serverSocket)
@@ -52,7 +54,7 @@ public:
     return m_serverSocket;
   }
 
-  EVENT_POST_TO_HANDLER_DECL
+
 private:
   PServerSocketLoop m_networkLoop;
   PServerSocket m_serverSocket;
@@ -69,6 +71,9 @@ public:
     m_serverSocket(serverSocket),
     m_networkLoop(networkLoop)
   {}
+
+  virtual ~EventStreamSocketAccepted() {  }
+
   int GetSocket() const {
     return m_sockfd;
   }
@@ -80,12 +85,70 @@ public:
     return m_networkLoop;
   }
 
-  virtual ~EventStreamSocketAccepted() {}
+
 private:
   int m_sockfd;
   PServerSocket m_serverSocket;
   PServerSocketLoop m_networkLoop;
 };
 
+
+
+class EventSocketWriteEOF : public IEvent
+{
+public:
+  EVENT_POST_TO_HANDLER_DECL
+
+  EventSocketWriteEOF(PStreamSocket pSocket) :
+    m_streamSocket(pSocket)
+  {  }
+  virtual ~EventSocketWriteEOF() {  }
+
+
+  const PStreamSocket GetStreamSocket() const {
+    return m_streamSocket;
+  }
+
+private:
+  PStreamSocket m_streamSocket;
+
+};
+
+
+class EventSocketWriteCompleted : public IEvent
+{
+public:
+  EVENT_POST_TO_HANDLER_DECL
+
+  EventSocketWriteCompleted(PStreamSocket pSocket) :
+    m_streamSocket(pSocket)
+  {  }
+  virtual ~EventSocketWriteCompleted() {  }
+
+  const PStreamSocket GetStreamSocket() const {
+    return m_streamSocket;
+  }
+
+private:
+    PStreamSocket m_streamSocket;
+};
+
+class EventSocketError : public IEvent
+{
+public:
+  EVENT_POST_TO_HANDLER_DECL
+
+  EventSocketError(PStreamSocket pSocket) :
+    m_streamSocket(pSocket)
+  {  }
+  virtual ~EventSocketError() {  }
+
+  const PStreamSocket GetStreamSocket() const {
+    return m_streamSocket;
+  }
+
+private:
+    PStreamSocket m_streamSocket;
+};
 
 #endif // NETWORK_EVENTS_H

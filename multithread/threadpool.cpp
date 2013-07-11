@@ -44,14 +44,14 @@ void ThreadPool::ThreadRoutine()
       runnable->Run();
       LOG("Pool {%1%} pthread_id: %2% >> Runnable completed : %3%", % this % boost::this_thread::get_id() % typeid(*runnable).name());
     } catch(ExceptionAssertFailed & e) {
-      LOG_BASE(Log::GetLogicErrorLogger(), LOG_LEVEL_LOGICERROR, "Pool {%1%} pthread_id: %2% >> \n\t !!!!!! ASSERTION FAILED IN RUNNABLE %3%\n\t\t >> %4%",
-          % this % boost::this_thread::get_id() % typeid(*runnable).name() % e.what());
+      Log::GetLogicErrorLogger()->PushMessage(LOG_MSG_LEV(LOG_LEVEL_LOGICERROR, "Pool {%1%} pthread_id: %2% >> \n\t !!!!!! ASSERTION FAILED IN RUNNABLE %3%\n\t\t >> %4%",
+          % this % boost::this_thread::get_id() % typeid(*runnable).name() % e.what()));
     } catch (std::exception &e) {
-      LOG_BASE(Log::GetLogicErrorLogger(), LOG_LEVEL_LOGICERROR, "Pool {%1%} pthread_id: %2% >> Uncaught std::exception while running runnable %3%, \n\t\t\twhat() == %4%",
-               % this % boost::this_thread::get_id() % typeid(*runnable).name() % e.what());
+      Log::GetLogicErrorLogger()->PushMessage(LOG_MSG_LEV(LOG_LEVEL_LOGICERROR, "Pool {%1%} pthread_id: %2% >> Uncaught std::exception while running runnable %3%, \n\t\t\twhat() == %4%",
+               % this % boost::this_thread::get_id() % typeid(*runnable).name() % e.what()));
     } catch(...) {
-      LOG_BASE(Log::GetLogicErrorLogger(), LOG_LEVEL_LOGICERROR, "Pool {%1%} pthread_id: %2% >> Uncaught unknown exception while running runnable %3%",
-               % this % boost::this_thread::get_id() % typeid(*runnable).name());
+      Log::GetLogicErrorLogger()->PushMessage(LOG_MSG_LEV(LOG_LEVEL_LOGICERROR, "Pool {%1%} pthread_id: %2% >> Uncaught unknown exception while running runnable %3%",
+               % this % boost::this_thread::get_id() % typeid(*runnable).name()));
     }
   }
   LOG("Pool {%1%} pthread_id: %2% >> Halt", % this % boost::this_thread::get_id());

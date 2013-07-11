@@ -15,6 +15,10 @@ public:
   virtual void HandleEvent(const EventStreamSocketAccepted & event);
   virtual void HandleEvent(const EventSocketReadyToAccept & event);
   virtual void HandleEvent(const EventNetworkAcceptFailed & event);
+  virtual void HandleEvent(const EventSocketWriteEOF & event);
+  virtual void HandleEvent(const EventSocketWriteCompleted & event);
+  virtual void HandleEvent(const EventSocketError & event);
+
 private:
 
   //Unexpected event handler. Can be overloaded.

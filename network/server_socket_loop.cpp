@@ -1,10 +1,11 @@
 #include "server_socket_loop.h"
+
 #include <sys/select.h>
 #include <unistd.h>
 #include <assert.h>
 #include <fcntl.h>
-#include "network/events.h"
 
+#include "network/events.h"
 #include "log/log.h"
 #include "util/assertion.h"
 
@@ -24,20 +25,18 @@ void LoopSocketListen::OneLoop()
 
   FD_SET(m_interruptor.GetPipeReadFd(), &fdsetRead);
 
-  for (auto &x : m_serverSockets) {
+  for (auto & x : m_serverSockets) {
     FD_SET(x->GetSocket(), &fdsetRead);
   }
-
-  int nfds = 1024;
-
   timeval tv;
   tv.tv_sec = 1;
   tv.tv_usec = 0;
-  int r = ::select(nfds, &fdsetRead, NULL, NULL, &tv);
+  int r = ::select(m_maxNfds, &fdsetRead, NULL, NULL, &tv);
 
   LOG("Loop{%1%} select() == %2%", % this % r);
 
   if (FD_ISSET(m_interruptor.GetPipeReadFd(), &fdsetRead)) {
+    LOG_DEBUG("Loop{%1%} interrupt caught", % this);
     m_interruptor.FlushRead();
   }
 
@@ -89,6 +88,7 @@ void LoopSocketListen::GrabNewListenSockets()
 
   for (auto & x : m_serverSocketsToAdd) {
     m_serverSockets.push_back(x);
+    m_maxNfds = std::max(m_maxNfds, x->GetSocket());
     LOG("Loop{%1%}  Socket %2% (port %3%) grabbed to loop", % this % x->GetSocket() % x->GetPort());
   }
   m_serverSocketsToAdd.clear();
@@ -104,7 +104,6 @@ void LoopSocketListen::Destroy()
 {
   LOG_SET_LOGGER_FILELOCAL;
   LOG("Loop{%1%} Uninitialized", % this);
-
 }
 
 void LoopSocketListen::DoBreak()

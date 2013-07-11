@@ -3,7 +3,7 @@
 
 #include "logger.h"
 #include "logformatter.h"
-#include "logendpoint.h"
+
 #include "logfilter.h"
 
 namespace Log

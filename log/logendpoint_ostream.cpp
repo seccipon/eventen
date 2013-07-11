@@ -18,7 +18,5 @@ namespace Log
   Logger_ostream::Logger_ostream(std::ostream &ostream, PLogFormatter formatter) :
     LoggerFormatted(formatter),
     m_ostream(ostream)
-  {
-
-  }
+  {   }
 }

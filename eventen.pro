@@ -30,10 +30,13 @@ network/ehsocketloop.cpp \
     log/loggersimple.cpp \
     log/log.cpp \
     log/logendpoint_ostream.cpp \
-    log/logendpointformatted.cpp \
     log/loggerthreaded.cpp \
     log/logger_cumulative.cpp \
-    log/logendpoint_logfile.cpp
+    log/logendpoint_logfile.cpp \
+    util/formatutil.cpp \
+    network/socket_write_task.cpp \
+    network/stream_socket.cpp \
+    util/buffer.cpp
 
 HEADERS += \
 engine_eht/task/taskfwd.h \
@@ -74,7 +77,11 @@ network/server_socket.h \
     util/assertion.h \
     log/loggerthreaded.h \
     log/logger_cumulative.h \
-    log/logendpoint_logfile.h
+    log/logendpoint_logfile.h \
+    util/formatutil.h \
+    network/socket_write_task.h \
+    network/stream_socket.h \
+    util/buffer.h
 
 
 QMAKE_CXXFLAGS += -std=c++11

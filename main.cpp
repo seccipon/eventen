@@ -17,7 +17,7 @@
 #include "log/log.h"
 #include "log/loggersimple.h"
 #include "log/logendpoint_ostream.h"
-#include "log/loggerwrapper.h"
+
 #include "log/logger_cumulative.h"
 #include "log/logfilternull.h"
 #include "log/logfilter.h"
@@ -32,7 +32,6 @@ int main()
   Log::InitLoggers();
 
   LOG_SET_LOGGER_DEFAULT;
-
 
   Log::LoggerCumulative lcm(Log::GetDefaultLogger(), LOG_MSG("Main function loop"));
   lcm.PushMessage(LOG_MSG("zhopa pizda %1% %2% %3% ", % 234 % "asdfasdf" % 231));
@@ -51,7 +50,6 @@ int main()
   taskTest.DoThing();
 
   PEventHandler ehNetworkLoop(new EHNetworkLoop);
-
 
   PServerSocketLoop networkLoop(new LoopSocketListen(ehNetworkLoop, 1));
 
@@ -79,6 +77,14 @@ int main()
   networkLoop->Interrupt();
 
   networkLoop->Break();
+
+
+  Log::LoggerCumulative lcm1(Log::GetDefaultLogger(), LOG_MSG("ANALNIY FIMOZ SRANIY PIDORAS"));
+  lcm1.PushMessage(LOG_MSG("zhopa pizda %1% %2% %3% ", % 234 % "asdfasdf" % 231));
+  lcm1.PushMessage(LOG_MSG("zhopa pizda %1% %2% %3% ", % 234 % "asdasdfasdffasdf" % 231));
+  lcm1.PushMessage(LOG_MSG("zhopa pizda %1% %2% %3% ", % 4321 % "asdf" % 2341));
+  lcm1.PushMessage(LOG_MSG("zhopa pizda %1% %2% %3% ", % "2qwe3qwer4" % "asdfasdfqwerasdf" % 123));
+  lcm1.Fail(LOG_MSG("i've fucked"));
 
 
   gThreadPool->Stop();

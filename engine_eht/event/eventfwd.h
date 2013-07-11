@@ -11,5 +11,8 @@ class EventTest;
 class EventStreamSocketAccepted;
 class EventSocketReadyToAccept;
 class EventNetworkAcceptFailed;
+class EventSocketWriteEOF;
+class EventSocketWriteCompleted;
+class EventSocketError;
 
 #endif // EVENTFWD_H

@@ -3,7 +3,7 @@
 
 #include "logger.h"
 #include "logformatter.h"
-#include "logendpoint.h"
+
 #include "logfilter.h"
 #include "multithread/threadpool.h"
 #include "multithread/shared_queue.h"
