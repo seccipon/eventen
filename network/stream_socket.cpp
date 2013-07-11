@@ -18,7 +18,7 @@ StreamSocket::WriteResult StreamSocket::Write(uint8_t *p, uint64_t sz, uint64_t 
       } if (errno == EINTR) {
         continue;
       } else {
-        throw EXCEPTION_LIBCALL((boost::format("socket error: %s") % ::strerror(errno)).str());
+        throw EXCEPTION_LIBCALL((boost::format("socket error: %i %s") % errno % ::strerror(errno)).str());
       }
     }
 
