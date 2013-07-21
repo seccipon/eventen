@@ -4,10 +4,10 @@
 
 #include "../event.h"
 
-class EventTest : public IEvent
+class EventTest
 {
-public:
-  EVENT_POST_TO_HANDLER_DECL
+public:  
+
 };
 
 #endif // EVENTTEST_H

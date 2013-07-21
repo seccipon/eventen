@@ -1,12 +1,20 @@
 #ifndef TASK_H
 #define TASK_H
 
-#include "engine_eht/event/eventfwd.h"
-#include "engine_eht/eh/eventhandlerfwd.h"
+
+#include <memory>
+
+#include "task_handle_event.h"
 #include "multithread/threadpool.h"
+
+
+
+template <typename EventHandlerType>
 class Task
 {
 public:
+  typedef std::shared_ptr<EventHandlerType> PEventHandler;
+
   Task(const PEventHandler & eh) :
     m_eh(eh)
   {}
@@ -15,12 +23,19 @@ public:
   {}
 
 protected:
-  void PostEvent(const PEvent & event);
-  void PostEventAsync(const PEvent & event, PThreadPool tp);
+  template <typename EventType> void PostEvent(const EventType & event) {
+    m_eh->HandleEvent(event);
+  }
+
+  template <typename EventType> void PostEventAsync(const EventType & event, PThreadPool tp) {
+    typedef std::shared_ptr<EventType> PEvent;
+    PEvent pEv ( new EventType(event) );
+    PRunnable routine( new EventHandleRoutine<EventHandlerType, EventType>(m_eh, event) );
+    tp->PostRunnable(routine);
+  }
 
 private:
-  PEventHandler m_eh;
+    PEventHandler m_eh;
 };
 
-typedef std::shared_ptr<Task> PTask;
 #endif // TASK_H

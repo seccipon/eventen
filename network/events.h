@@ -4,10 +4,12 @@
 #include "engine_eht/event/event.h"
 #include "server_socket_loop.h"
 #include "stream_socket.h"
-class EventNetworkAcceptFailed : public IEvent
+
+
+
+class EventNetworkAcceptFailed
 {
-public:
-  EVENT_POST_TO_HANDLER_DECL
+public:  
 
   EventNetworkAcceptFailed(PServerSocketLoop loop, PServerSocket ssocket, int errn) :
     m_networkLoop(loop),
@@ -36,10 +38,9 @@ private:
 
 };
 
-class EventSocketReadyToAccept : public IEvent
+class EventSocketReadyToAccept
 {
 public:
-  EVENT_POST_TO_HANDLER_DECL
 
   EventSocketReadyToAccept(PServerSocketLoop networkLoop, PServerSocket serverSocket) :
     m_networkLoop(networkLoop),
@@ -60,11 +61,10 @@ private:
   PServerSocket m_serverSocket;
 };
 
-
-class EventStreamSocketAccepted : public IEvent
+class EventStreamSocketAccepted
 {
 public:
-  EVENT_POST_TO_HANDLER_DECL
+
 
   EventStreamSocketAccepted(PServerSocketLoop networkLoop, int sockfd, PServerSocket serverSocket) :
     m_sockfd(sockfd),
@@ -92,12 +92,10 @@ private:
   PServerSocketLoop m_networkLoop;
 };
 
-
-
-class EventSocketWriteEOF : public IEvent
+class EventSocketWriteEOF
 {
 public:
-  EVENT_POST_TO_HANDLER_DECL
+
 
   EventSocketWriteEOF(PStreamSocket pSocket) :
     m_streamSocket(pSocket)
@@ -114,12 +112,9 @@ private:
 
 };
 
-
-class EventSocketWriteCompleted : public IEvent
+class EventSocketWriteCompleted
 {
 public:
-  EVENT_POST_TO_HANDLER_DECL
-
   EventSocketWriteCompleted(PStreamSocket pSocket) :
     m_streamSocket(pSocket)
   {  }
@@ -133,10 +128,9 @@ private:
     PStreamSocket m_streamSocket;
 };
 
-class EventSocketError : public IEvent
+class EventSocketError
 {
 public:
-  EVENT_POST_TO_HANDLER_DECL
 
   EventSocketError(PStreamSocket pSocket) :
     m_streamSocket(pSocket)

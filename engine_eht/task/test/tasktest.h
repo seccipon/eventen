@@ -3,15 +3,23 @@
 
 
 #include "../task.h"
+#include "../../event/test/eventtest.h"
 
-class TaskTest : public Task
+
+template <typename EventHandlerType>
+class TaskTest : public Task<EventHandlerType>
 {
 public:
-  TaskTest(const PEventHandler & eh) :
-    Task(eh)
+  typedef std::shared_ptr<EventHandlerType> PEventHandler;
+
+  explicit TaskTest(const PEventHandler & eh) :
+    Task<EventHandlerType>(eh)
   {}
 
-  void DoThing();
+  void DoThing() {
+    EventTest tt;
+    this->PostEvent(tt);
+  }
 
 };
 

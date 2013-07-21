@@ -46,12 +46,12 @@ int main()
   LOG("sotona: %1% %2% %3%", % "sobaka" % 123 % boost::posix_time::microsec_clock::local_time());
 
 
-  TaskTest taskTest(PEventHandler(new EventHandlerTest));
+  TaskTest<EventHandlerTest> taskTest(std::shared_ptr<EventHandlerTest>(new EventHandlerTest));
   taskTest.DoThing();
 
-  PEventHandler ehNetworkLoop(new EHNetworkLoop);
+  std::shared_ptr<EHNetworkLoop> ehNetworkLoop(new EHNetworkLoop);
 
-  PServerSocketLoop networkLoop(new LoopSocketListen(ehNetworkLoop, 1));
+  std::shared_ptr<LoopSocketListen<EHNetworkLoop> > networkLoop(new LoopSocketListen<EHNetworkLoop>(ehNetworkLoop, 1));
 
   PServerSocket pSock(new ServerSocket(ServerSocket::Init(33600)));
   pSock->SetNonblock(true);

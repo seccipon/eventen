@@ -1,12 +1,12 @@
-#include "tasktest.h"
-#include "../../event/test/eventtest.h"
+//#include "tasktest.h"
+//#include "../../event/test/eventtest.h"
 
-#include <iostream>
+//#include <iostream>
 
-using namespace std;
+//using namespace std;
 
 
-void TaskTest::DoThing()
-{
-  PostEvent(PEvent(new EventTest()));
-}
+//void TaskTest::DoThing()
+//{
+//  PostEvent(PEvent(new EventTest()));
+//}

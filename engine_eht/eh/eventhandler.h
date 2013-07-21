@@ -1,29 +1,29 @@
-#ifndef EVENTHANDLER_H
-#define EVENTHANDLER_H
+//#ifndef EVENTHANDLER_H
+//#define EVENTHANDLER_H
 
-#include "../event/eventfwd.h"
+//#include "../event/eventfwd.h"
 
-#include <memory>
+//#include <memory>
 
-class EventHandler
-{
-public:
-  //Entry point for all events
-  void HandleEvent(const PEvent & event);
+//class EventHandler
+//{
+//public:
+//  //Entry point for all events
+//  void HandleEvent(const PEvent & event);
 
-  virtual void HandleEvent(const EventTest & event);
-  virtual void HandleEvent(const EventStreamSocketAccepted & event);
-  virtual void HandleEvent(const EventSocketReadyToAccept & event);
-  virtual void HandleEvent(const EventNetworkAcceptFailed & event);
-  virtual void HandleEvent(const EventSocketWriteEOF & event);
-  virtual void HandleEvent(const EventSocketWriteCompleted & event);
-  virtual void HandleEvent(const EventSocketError & event);
+//  virtual void HandleEvent(const EventTest & event);
+//  virtual void HandleEvent(const EventStreamSocketAccepted & event);
+//  virtual void HandleEvent(const EventSocketReadyToAccept & event);
+//  virtual void HandleEvent(const EventNetworkAcceptFailed & event);
+//  virtual void HandleEvent(const EventSocketWriteEOF & event);
+//  virtual void HandleEvent(const EventSocketWriteCompleted & event);
+//  virtual void HandleEvent(const EventSocketError & event);
 
-private:
+//private:
 
-  //Unexpected event handler. Can be overloaded.
-  virtual void UnexpectedEvent(const IEvent &event);
-};
+//  //Unexpected event handler. Can be overloaded.
+//  virtual void UnexpectedEvent(const IEvent &event);
+//};
 
 
-#endif // EVENTHANDLER_H
+//#endif // EVENTHANDLER_H

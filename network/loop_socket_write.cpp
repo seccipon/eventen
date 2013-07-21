@@ -13,12 +13,6 @@
 #define LOG_FILELOCAL_LOGGER Log::GetNetworkLogger()
 #define LOG_LOGGER_TAG "NETW"
 
-LoopSocketWrite::LoopSocketWrite(PEventHandler eh, int timeout) :
-  Task(eh)
-{
-
-}
-
 void LoopSocketWrite::OneLoop()
 {
   LOG_SET_LOGGER_FILELOCAL;

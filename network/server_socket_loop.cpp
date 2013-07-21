@@ -50,16 +50,14 @@ void LoopSocketListen::OneLoop()
       int sockfd = -1;
       int errn = 0;
       bool res = x->Accept(sockfd, errn);
-      PEvent event;
-      if (res) {
-        LOG("Loop{%1%} Socket accepted successfully, socket id = %2%",  % this % sockfd);
-        event.reset(new EventStreamSocketAccepted(shared_from_this(), sockfd, x));
-      } else {
-        LOG("Loop{%1%} Socket accept failed, errno : %2%",  % this % errn);
-        event.reset(new EventNetworkAcceptFailed(shared_from_this(), x, errn));
-      }
 
-      PostEventAsync(event, gThreadPool);
+      if (res) {
+        LOG("Loop{%1%} Socket accepted successfully, socket id = %2%",  % this % sockfd);        
+        PostEventAsync(EventStreamSocketAccepted(shared_from_this(), sockfd, x), gThreadPool);
+      } else {
+        LOG("Loop{%1%} Socket accept failed, errno : %2%",  % this % errn);        
+        PostEventAsync(EventNetworkAcceptFailed(shared_from_this(), x, errn), gThreadPool);
+      }      
     }
   }
 }

@@ -8,10 +8,14 @@
 
 #include <vector>
 
-class LoopSocketWrite : public Loop, public Task, public boost::noncopyable, public std::enable_shared_from_this<LoopSocketWrite>
+template<typename EventHandlerType>
+class LoopSocketWrite : public Loop, public Task<EventHandlerType>, public boost::noncopyable, public std::enable_shared_from_this<LoopSocketWrite>
 {
 public:
-  explicit LoopSocketWrite(PEventHandler eh, int timeout);
+  explicit LoopSocketWrite(PEventHandler eh, int timeout) :
+    Task(eh)
+  {   }
+
   virtual ~LoopSocketWrite()
   {   }
 

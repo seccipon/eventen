@@ -3,10 +3,10 @@
 
 #include <memory>
 
-class Task;
-typedef std::shared_ptr<Task> PTask;
+//class Task;
+//typedef std::shared_ptr<Task> PTask;
 
-class TaskTest;
+//class TaskTest;
 
 
 #endif // TASKFWD_H

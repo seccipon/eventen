@@ -2,12 +2,12 @@
 #define EVENTHANDLERTEST_H
 
 
-#include "../eventhandler.h"
+#include "../../event/test/eventtest.h"
 
-class EventHandlerTest : public EventHandler
+class EventHandlerTest
 {
 public:
-  virtual void HandleEvent(const EventTest &event);
+  void HandleEvent(const EventTest &event);
 };
 
 #endif // EVENTHANDLERTEST_H

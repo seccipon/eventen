@@ -10,11 +10,17 @@
 #include <deque>
 #include <vector>
 
-class LoopSocketListen : public Loop, public Task, public boost::noncopyable, public std::enable_shared_from_this<LoopSocketListen>
+
+template <typename EventHandlerType>
+class LoopSocketListen : public Loop,
+                         public Task<EventHandlerType>,
+                         public boost::noncopyable,
+                         public std::enable_shared_from_this<LoopSocketListen<EventHandlerType> >
 {
 public:
+  typedef std::shared_ptr<EventHandlerType> PEventHandler;
   explicit LoopSocketListen(PEventHandler eh, int timeout) :
-    Task(eh),
+    Task<EventHandlerType>(eh),
     m_maxNfds(0),
     m_timeout(timeout)
   {
@@ -47,6 +53,4 @@ private:
   std::deque<PServerSocket> m_serverSocketsToAdd;
 };
 
-
-typedef std::shared_ptr<LoopSocketListen> PServerSocketLoop;
 #endif // NETWORKLOOP_H
